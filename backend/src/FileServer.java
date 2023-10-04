@@ -11,6 +11,10 @@ public class FileServer {
             FileService fileService = new FileServiceImpl();
             Naming.rebind("FileService", fileService);
 
+            // Inicie a API HTTP
+            FileServerAPI fileServerAPI = new FileServerAPI(fileService);
+            fileServerAPI.start();
+
             System.out.println("Servidor pronto para receber solicitações.");
         } catch (Exception e) {
             e.printStackTrace();
