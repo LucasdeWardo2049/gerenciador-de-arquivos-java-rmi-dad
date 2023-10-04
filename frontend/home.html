@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Home - Gerenciador de Arquivos Java RMI</title>
 </head>
+
 <body>
   <header>
     <h1>Gerenciador de Arquivos Java RMI</h1>
@@ -12,60 +14,13 @@
 
   <nav>
     <button id="listar-arquivos-button">Listar arquivos</button>
-    <input type="file" id="arquivo-input">
-    <button id="upload-arquivo-button">Enviar arquivo</button>
+    <button id="upload-arquivo-button">Upload de arquivo</button>
+    <button id="download-arquivo-button">Download de arquivo</button>
   </nav>
 
-  <section id="arquivos-section">
-    <h2>Arquivos no servidor:</h2>
-    <ul id="arquivos-list"></ul>
-  </section>
-
-  <script>
-    const listarArquivosButton = document.getElementById('listar-arquivos-button');
-    const arquivoInput = document.getElementById('arquivo-input');
-    const uploadArquivoButton = document.getElementById('upload-arquivo-button');
-    const arquivosList = document.getElementById('arquivos-list');
-
-    listarArquivosButton.addEventListener('click', () => {
-      fetch('/listar-arquivos')
-        .then(response => response.json())
-        .then(arquivos => {
-          arquivosList.innerHTML = '';
-          arquivos.forEach(arquivo => {
-            const li = document.createElement('li');
-            li.textContent = arquivo;
-            arquivosList.appendChild(li);
-          });
-        })
-        .catch(error => console.error(error));
-    });
-
-    uploadArquivoButton.addEventListener('click', () => {
-      const arquivo = arquivoInput.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        const fileData = reader.result.split(',')[1];
-        const fileName = arquivo.name;
-
-        fetch('/upload-arquivo?fileName=' + encodeURIComponent(fileName), {
-          method: 'POST',
-          body: fileData
-        })
-          .then(response => {
-            if (response.ok) {
-              console.log('Arquivo enviado com sucesso.');
-            } else if (response.status === 409) {
-              console.error('O arquivo já existe no servidor.');
-            } else {
-              console.error('Falha ao enviar o arquivo.');
-            }
-          })
-          .catch(error => console.error(error));
-      };
-
-      reader.readAsDataURL(arquivo);
-    });
-  </script>
+  <footer>
+    <p>&copy; 2023 Ademar Castro. Todos os direitos reservados.</p>
+  </footer>
 </body>
+
 </html>
